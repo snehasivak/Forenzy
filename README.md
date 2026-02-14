@@ -39,13 +39,10 @@ Forenzy provides a digital "Junior Lab" where students can perform virtual exper
 
 ## Features
 
-Junior Lab AI: A Groq-powered chatbot that uses Llama 3.3 to explain forensic concepts using fun analogies and emojis.
-
-Interactive Evidence Labs: Specialized modules for Glass Fracture (4R Rule), Blood Analysis (Kastle-Meyer/Luminol), Fingerprint Identification, and Skull Growth.
-
-Flippable Learning Cards: Educational flashcards that reveal "Science Secrets" with 3D-like animations.
-
-Detective Test Mode: A quiz system that evaluates what the student has learned, awarding titles like "Master Detective" or "Junior Agent."
+- Junior Lab AI: A Groq-powered chatbot that uses Llama 3.3 to explain forensic concepts using fun analogies and emojis.
+- Interactive Evidence Labs: Specialized modules for Glass Fracture (4R Rule), Blood Analysis (Kastle-Meyer/Luminol), Fingerprint Identification, and Skull Growth.
+- Flippable Learning Cards: Educational flashcards that reveal "Science Secrets" with 3D-like animations.
+- Detective Test Mode: A quiz system that evaluates what the student has learned, awarding titles like "Master Detective" or "Junior Agent."
 
 ---
 
@@ -70,6 +67,8 @@ npx expo start
 # Build for production (Web)
 npx expo export --platform web
 ```
+
+---
 
 ## Project Documentation
 
@@ -113,22 +112,15 @@ App Flow Diagram
 The user flows from a Welcome Screen to a Main Menu. From the menu, they can branch into the Junior Lab AI for Q&A, or the Explore section for specialized labs. All paths eventually lead to the Test Mode and the Results summary.
 
 #### Installation Guide
+For Web:
+Open the link: https://forenzy.netlify.app/
 
-**For Android (APK):**
-1. Download the APK from [Release Link]
-2. Enable "Install from Unknown Sources" in your device settings:
-   - Go to Settings > Security
-   - Enable "Unknown Sources"
-3. Open the downloaded APK file
-4. Follow the installation prompts
-5. Open the app and enjoy!
+Add to Home Screen (Optional): * iOS: Tap the "Share" icon in Safari and select "Add to Home Screen."
 
-**For iOS (IPA) - TestFlight:**
-1. Download TestFlight from the App Store
-2. Open this TestFlight link: [Your TestFlight Link]
-3. Click "Install" or "Accept"
-4. Wait for the app to install
-5. Open the app from your home screen
+Android: Tap the three dots in Chrome and select "Install App."
+
+The app will now behave like a native mobile app on your device!
+
 
 **Building from Source:**
 ```bash
@@ -146,6 +138,7 @@ npx expo run:ios
 ```
 
 ---
+
 
 ## Project Demo
 
