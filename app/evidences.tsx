@@ -1,10 +1,18 @@
 import React from 'react';
 import { StyleSheet, Text, View, Pressable, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../src/constants/Colors';
 import { CheckCircle } from 'lucide-react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Academy Palette - Matching your Index/Menu theme
+const ACADEMY_COLORS = {
+  background: '#F0F9FF', 
+  text: '#2D3436',       
+  mint: '#4ECDC4',    
+  card: '#FFFFFF',
+  softGrey: '#94A3B8'
+};
 
 const EVIDENCE_DATA = [
   { id: 'glass', title: 'Glass', image: require('../assets/images/glass.jpg') },
@@ -23,13 +31,13 @@ export default function EvidencesScreen() {
     <View style={[styles.mainContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
       
       {/* HEADER: Centered */}
-<View style={styles.header}>
-  <Pressable onPress={() => router.back()} style={styles.backButton}>
-    <Ionicons name="arrow-back" size={24} color={Colors.text} />
-  </Pressable>
-  <Text style={styles.headerTitle}>Evidence Lab</Text>
-  <Text style={styles.headerSubtitle}>Analyze the clues below</Text>
-</View>
+      <View style={styles.header}>
+        <Pressable onPress={() => router.back()} style={styles.backButton}>
+          <Ionicons name="arrow-back" size={24} color={ACADEMY_COLORS.text} />
+        </Pressable>
+        <Text style={styles.headerTitle}>Evidence Lab</Text>
+        <Text style={styles.headerSubtitle}>Analyze the clues below</Text>
+      </View>
 
       {/* Centered Grid with a max width for Desktop */}
       <View style={styles.gridWrapper}>
@@ -74,37 +82,36 @@ export default function EvidencesScreen() {
 const styles = StyleSheet.create({
   mainContainer: { 
     flex: 1, 
-    backgroundColor: Colors.background,
+    backgroundColor: ACADEMY_COLORS.background,
     paddingHorizontal: 20,
   },
   header: {
     marginTop: 10,
     marginBottom: 10,
-    alignItems: 'center', // Centers the text and back button horizontally
+    alignItems: 'center',
     justifyContent: 'center',
   },
   backButton: { 
-    position: 'absolute', // Pulls button to the left so it doesn't push text off-center
+    position: 'absolute',
     left: 0,
     top: 5,
   },
   headerTitle: { 
     fontSize: 26, 
     fontWeight: '900', 
-    color: Colors.text, 
+    color: ACADEMY_COLORS.text, 
     letterSpacing: 1,
-    textAlign: 'center', // Ensures text centers within its own box
+    textAlign: 'center',
   },
   headerSubtitle: { 
     fontSize: 13, 
-    color: '#94A3B8',
+    color: ACADEMY_COLORS.softGrey,
     textAlign: 'center',
     marginTop: 2,
   },
-  
   gridWrapper: {
     flex: 1,
-    alignItems: 'center', // Centers the grid on desktop
+    alignItems: 'center',
     justifyContent: 'center',
   },
   gridContainer: {
@@ -112,41 +119,42 @@ const styles = StyleSheet.create({
     width: '100%',
     maxWidth: 500, 
     marginVertical: 10,
-    gap: 20, // Increased vertical space between rows
+    gap: 20,
   },
   row: {
     flex: 1,
     flexDirection: 'row',
-    gap: 20, // Increased horizontal space between the two columns
+    gap: 20,
   },
   card: {
     flex: 1,
-    backgroundColor: '#1E293B',
-    borderRadius: 12,
+    backgroundColor: ACADEMY_COLORS.card,
+    borderRadius: 20, // Slightly more rounded for a kid-friendly feel
     overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(56, 189, 248, 0.15)',
-    // We can remove aspectRatio if you want the cards to 
-    // stretch slightly to fill the space, or keep it for consistency.
+    borderColor: 'rgba(78, 205, 196, 0.2)',
     aspectRatio: 0.85, 
+    elevation: 4, // Added shadow for a "popping" look
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
   },
   cardPreview: {
     flex: 1, 
     width: '100%',
     height: '100%',
-    // This is the safety net - ensures the whole image fits without stretching
-    backgroundColor: '#070C14', 
+    backgroundColor: '#FFFFFF', // Changed from black to white to fit the theme
   },
   cardFooter: {
     paddingVertical: 10,
     alignItems: 'center',
-    backgroundColor: '#1E293B',
+    backgroundColor: ACADEMY_COLORS.card,
     borderTopWidth: 1,
-    borderTopColor: 'rgba(255,255,255,0.05)',
+    borderTopColor: '#F0F4F8',
   },
   cardTitle: {
-    color: 'white',
-    fontSize: 13,
+    color: ACADEMY_COLORS.text,
+    fontSize: 14,
     fontWeight: '800',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
@@ -156,7 +164,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   doneButton: {
-    backgroundColor: '#4CAF50',
+    backgroundColor: ACADEMY_COLORS.mint, // Consistent with your main theme
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,

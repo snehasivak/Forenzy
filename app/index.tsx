@@ -1,71 +1,72 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, Alert } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, Alert, Dimensions } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { Colors } from '../src/constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-// 1. Import the global user hook
 import { useUser } from '../UserContext'; 
+
+const { width } = Dimensions.get('window');
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
   const router = useRouter();
-  
-  // 2. Access the global setUserName function
   const { setUserName } = useUser();
-  
   const [name, setName] = useState('');
 
-  const dynamicPadding = {
-    paddingTop: insets.top > 0 ? insets.top : 20,
-    paddingBottom: insets.bottom > 0 ? insets.bottom : 20,
+  // Pleasant, positive color constants
+  const UI_COLORS = {
+    background: '#F0F9FF', // Light airy blue
+    primary: '#4ECDC4',    // Friendly Mint
+    secondary: '#FFD166',  // Sunny Yellow
+    accent: '#6C5CE7',     // Playful Purple
+    text: '#2D3436',       // Soft Dark Grey
+    card: '#FFFFFF',       // Pure White
   };
 
   const handleInitialize = () => {
     if (name.trim()) {
-      // 3. Save name globally so it's remembered throughout the app
       setUserName(name.trim()); 
-      
-      // Navigate to menu (no need to pass params in URL anymore)
       router.push('/menu');
     } else {
-      Alert.alert("Access Denied", "Please identify yourself, Detective!");
+      Alert.alert("Wait, Detective!", "We need to know your name before the mission begins! 🔍");
     }
   };
 
   return (
-    <View style={[styles.container, dynamicPadding]}>
-      <StatusBar barStyle="light-content" />
+    <View style={[styles.container, { paddingTop: insets.top + 40, paddingBottom: insets.bottom + 20 }]}>
+      <StatusBar barStyle="dark-content" />
       
+      {/* Top Decoration */}
       <View style={styles.header}>
         <View style={styles.logoCircle}>
-          <MaterialCommunityIcons name="shield-search" size={50} color={Colors.primary} />
+          <MaterialCommunityIcons name="magnify-scan" size={60} color="#4ECDC4" />
         </View>
         <Text style={styles.title}>FORENZY</Text>
-        <Text style={styles.subtitle}>Digital Evidence Management</Text>
+        <View style={styles.badge}>
+          <Text style={styles.subtitle}>JUNIOR DETECTIVE LAB</Text>
+        </View>
       </View>
 
-      <View style={styles.inputContainer}>
-        <Text style={styles.inputLabel}>IDENTIFY YOURSELF, DETECTIVE:</Text>
+      <View style={styles.inputCard}>
+        <Text style={styles.inputLabel}>What's your name, Hero?</Text>
         <TextInput
           style={styles.nameInput}
-          placeholder="Enter Name..."
-          placeholderTextColor="rgba(148, 163, 184, 0.5)"
+          placeholder="Type your name here..."
+          placeholderTextColor="#A0AEC0"
           value={name}
           onChangeText={setName}
           autoCapitalize="words"
-          returnKeyType="done"
-          onSubmitEditing={handleInitialize}
         />
+        <Text style={styles.hintText}>Your mystery-solving journey starts here! ✨</Text>
       </View>
 
       <View style={styles.footer}>
         <TouchableOpacity 
           style={styles.primaryButton}
           onPress={handleInitialize} 
-          activeOpacity={0.8}
+          activeOpacity={0.9}
         >
-          <Text style={styles.buttonText}>INITIALIZE SCAN</Text>
+          <Text style={styles.buttonText}>START ANALYSING</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -75,77 +76,100 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.background,
+    backgroundColor: '#F0F9FF', 
+    paddingHorizontal: 30,
     justifyContent: 'space-between',
-    paddingHorizontal: 24,
   },
   header: {
     alignItems: 'center',
-    marginTop: 60,
   },
   logoCircle: {
-    width: 120,
-    height: 120,
-    borderRadius: 60,
-    backgroundColor: Colors.card,
+    width: 130,
+    height: 130,
+    borderRadius: 65,
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.primary,
-    marginBottom: 24,
-    shadowColor: Colors.primary,
-    shadowOffset: { width: 0, height: 0 },
-    shadowOpacity: 0.5,
-    shadowRadius: 10,
-    elevation: 10,
+    marginBottom: 20,
+    // Soft kid-friendly shadow
+    shadowColor: "#4ECDC4",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.2,
+    shadowRadius: 15,
+    elevation: 8,
   },
   title: {
-    fontSize: 36,
+    fontSize: 42,
     fontWeight: '900',
-    color: Colors.text,
-    letterSpacing: 6,
+    color: '#2D3436',
+    letterSpacing: 4,
+  },
+  badge: {
+    backgroundColor: '#6C5CE7',
+    paddingHorizontal: 15,
+    paddingVertical: 5,
+    borderRadius: 20,
+    marginTop: 10,
   },
   subtitle: {
-    fontSize: 14,
-    color: '#94A3B8',
-    marginTop: 8,
-    textTransform: 'uppercase',
-  },
-  inputContainer: {
-    width: '100%',
-    paddingHorizontal: 10,
-  },
-  inputLabel: {
-    color: Colors.primary,
     fontSize: 12,
+    color: '#FFFFFF',
     fontWeight: 'bold',
-    marginBottom: 10,
     letterSpacing: 1,
   },
-  nameInput: {
-    backgroundColor: Colors.card,
-    borderWidth: 1,
-    borderColor: 'rgba(78, 205, 196, 0.3)',
-    borderRadius: 8,
-    padding: 15,
-    color: 'white',
+  inputCard: {
+    backgroundColor: '#FFFFFF',
+    padding: 25,
+    borderRadius: 30,
+    width: '100%',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 5,
+  },
+  inputLabel: {
+    color: '#2D3436',
     fontSize: 18,
-    fontWeight: 'bold',
+    fontWeight: '700',
+    marginBottom: 15,
+    textAlign: 'center',
+  },
+  nameInput: {
+    backgroundColor: '#F7FAFC',
+    borderWidth: 2,
+    borderColor: '#E2E8F0',
+    borderRadius: 15,
+    padding: 18,
+    color: '#2D3436',
+    fontSize: 20,
+    fontWeight: '600',
+    textAlign: 'center',
+  },
+  hintText: {
+    color: '#718096',
+    fontSize: 12,
+    textAlign: 'center',
+    marginTop: 15,
   },
   footer: {
-    gap: 12,
     marginBottom: 20,
   },
   primaryButton: {
-    backgroundColor: Colors.primary,
-    paddingVertical: 18,
-    borderRadius: 8,
+    backgroundColor: '#4ECDC4',
+    paddingVertical: 20,
+    borderRadius: 20,
     alignItems: 'center',
+    shadowColor: "#4ECDC4",
+    shadowOffset: { width: 0, height: 8 },
+    shadowOpacity: 0.3,
+    shadowRadius: 10,
+    elevation: 8,
   },
   buttonText: {
-    color: '#0F172A', 
-    fontWeight: 'bold',
-    fontSize: 14,
-    letterSpacing: 2,
+    color: '#FFFFFF', 
+    fontWeight: '900',
+    fontSize: 18,
+    letterSpacing: 1,
   },
 });

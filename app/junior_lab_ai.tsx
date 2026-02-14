@@ -1,9 +1,18 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, ActivityIndicator, Alert } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Pressable, ScrollView, ActivityIndicator, Alert, StatusBar } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../src/constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
 import { Bot, Send } from 'lucide-react-native';
+
+// Academy Palette - Consistent with your new theme
+const ACADEMY_COLORS = {
+  background: '#F0F9FF', 
+  text: '#2D3436',       
+  mint: '#4ECDC4',    
+  purple: '#A29BFE',   
+  white: '#FFFFFF',
+  softGrey: '#94A3B8'
+};
 
 export default function JuniorLabAI() {
   const router = useRouter();
@@ -11,6 +20,7 @@ export default function JuniorLabAI() {
   const [response, setResponse] = useState('');
   const [loading, setLoading] = useState(false);
 
+  // Using the protected environment variable
   const GROQ_API_KEY = process.env.EXPO_PUBLIC_GROQ_API_KEY;
 
   const askJuniorLab = async () => {
@@ -43,9 +53,11 @@ export default function JuniorLabAI() {
       });
 
       const data = await res.json();
-      setResponse(data.choices[0].message.content);
+      if (data.choices && data.choices[0]) {
+        setResponse(data.choices[0].message.content);
+      }
     } catch (error) {
-      setResponse("Oops! 😵 My lab tools are broken. Try again! 🧪");
+      setResponse("Oops! 😵 My lab tools are a bit glitchy. Try again! 🧪");
     } finally {
       setLoading(false);
     }
@@ -53,36 +65,48 @@ export default function JuniorLabAI() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+      
+      {/* Header matching Academy Style */}
       <View style={styles.header}>
-        <Pressable onPress={() => router.back()}><Ionicons name="arrow-back" size={24} color="white" /></Pressable>
-        <Text style={styles.headerTitle}>Junior Lab AI 🤖</Text>
+        <Pressable onPress={() => router.back()} style={styles.backBtn}>
+          <Ionicons name="arrow-back" size={24} color={ACADEMY_COLORS.text} />
+        </Pressable>
+        <Text style={styles.headerTitle}>Junior Lab AI</Text>
+        <Bot color={ACADEMY_COLORS.mint} size={28} />
       </View>
 
-      <ScrollView style={styles.chatArea}>
-        {loading && <ActivityIndicator size="large" color={Colors.primary} />}
+      <ScrollView style={styles.chatArea} contentContainerStyle={styles.scrollContent}>
+        {loading && <ActivityIndicator size="large" color={ACADEMY_COLORS.mint} style={{ marginTop: 50 }} />}
         
         {response ? (
           <View style={styles.aiBubble}>
             <Text style={styles.responseText}>{response}</Text>
           </View>
-        ) : (
+        ) : !loading && (
           <View style={styles.placeholder}>
+            <Text style={styles.placeholderEmoji}>🤖</Text>
             <Text style={styles.placeholderText}>Ask me a science secret! 🔍</Text>
           </View>
         )}
       </ScrollView>
 
+      {/* Search Input Area */}
       <View style={styles.inputWrapper}>
         <View style={styles.searchContainer}>
           <TextInput
             style={styles.input}
             placeholder="How do I find DNA? 🧬"
-            placeholderTextColor="#94A3B8"
+            placeholderTextColor={ACADEMY_COLORS.softGrey}
             value={query}
             onChangeText={setQuery}
           />
-          <Pressable style={styles.sendButton} onPress={askJuniorLab}>
-            <Send size={20} color="#0F172A" />
+          <Pressable 
+            style={[styles.sendButton, !query.trim() && { opacity: 0.5 }]} 
+            onPress={askJuniorLab}
+            disabled={loading || !query.trim()}
+          >
+            <Send size={20} color="white" />
           </Pressable>
         </View>
       </View>
@@ -91,32 +115,64 @@ export default function JuniorLabAI() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: Colors.background },
-  header: { paddingTop: 60, padding: 20, flexDirection: 'row', alignItems: 'center', backgroundColor: Colors.card },
-  headerTitle: { color: 'white', fontSize: 22, fontWeight: 'bold', marginLeft: 15 },
-  chatArea: { flex: 1, padding: 20 },
-  aiBubble: { 
-    backgroundColor: '#1E293B', 
-    padding: 20, 
-    borderRadius: 20, 
-    borderWidth: 2, 
-    borderColor: Colors.primary, // Using primary color for border
-    shadowColor: Colors.primary,
-    shadowOpacity: 0.3,
+  container: { flex: 1, backgroundColor: ACADEMY_COLORS.background },
+  header: { 
+    paddingTop: 60, 
+    paddingHorizontal: 20, 
+    paddingBottom: 20, 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    backgroundColor: ACADEMY_COLORS.white,
+    borderBottomLeftRadius: 25,
+    borderBottomRightRadius: 25,
+    elevation: 4,
+    shadowColor: '#000',
+    shadowOpacity: 0.05,
     shadowRadius: 10,
-    elevation: 5
+  },
+  backBtn: { marginRight: 15 },
+  headerTitle: { color: ACADEMY_COLORS.text, fontSize: 22, fontWeight: 'bold', flex: 1 },
+  chatArea: { flex: 1 },
+  scrollContent: { padding: 25 },
+  aiBubble: { 
+    backgroundColor: ACADEMY_COLORS.white, 
+    padding: 20, 
+    borderRadius: 25, 
+    borderTopLeftRadius: 5,
+    borderWidth: 2, 
+    borderColor: ACADEMY_COLORS.mint, 
+    shadowColor: ACADEMY_COLORS.mint,
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+    elevation: 3
   },
   responseText: { 
-    color: '#FFD700', // Gold color for the AI text to make it stand out
+    color: ACADEMY_COLORS.text, 
     fontSize: 18, 
     lineHeight: 28, 
     fontWeight: '600',
     textAlign: 'center'
   },
   placeholder: { marginTop: 100, alignItems: 'center' },
-  placeholderText: { color: '#94A3B8', fontSize: 16, fontStyle: 'italic' },
-  inputWrapper: { padding: 20 },
-  searchContainer: { flexDirection: 'row', backgroundColor: '#1E293B', borderRadius: 20, padding: 10, alignItems: 'center' },
-  input: { flex: 1, color: 'white', fontSize: 16, paddingHorizontal: 10 },
-  sendButton: { backgroundColor: Colors.primary, padding: 12, borderRadius: 15 }
+  placeholderEmoji: { fontSize: 60, marginBottom: 15 },
+  placeholderText: { color: ACADEMY_COLORS.softGrey, fontSize: 16, fontStyle: 'italic' },
+  inputWrapper: { padding: 20, paddingBottom: 35 },
+  searchContainer: { 
+    flexDirection: 'row', 
+    backgroundColor: ACADEMY_COLORS.white, 
+    borderRadius: 25, 
+    padding: 10, 
+    alignItems: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOpacity: 0.1,
+    shadowRadius: 10,
+  },
+  input: { flex: 1, color: ACADEMY_COLORS.text, fontSize: 16, paddingHorizontal: 15 },
+  sendButton: { 
+    backgroundColor: ACADEMY_COLORS.mint, 
+    padding: 12, 
+    borderRadius: 20,
+    marginLeft: 10
+  }
 });

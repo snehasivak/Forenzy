@@ -1,15 +1,24 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Image, StatusBar } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import Animated, { FadeIn, ZoomIn, FadeOut, SlideInUp } from 'react-native-reanimated';
+
+// Academy Palette - Consistent with your new theme
+const ACADEMY_COLORS = {
+  background: '#F0F9FF', 
+  text: '#2D3436',       
+  mint: '#4ECDC4',    
+  yellow: '#FFD166',  
+  purple: '#A29BFE',   
+  white: '#FFFFFF',
+  softGrey: '#94A3B8'
+};
 
 export default function BonesLab() {
   const router = useRouter();
   const [showBriefing, setShowBriefing] = useState(true);
   const [analyzed, setAnalyzed] = useState<{ [key: string]: boolean }>({});
-  
-  // Single state to track progress
   const [isAdultPhase, setIsAdultPhase] = useState(false);
 
   const sutures = [
@@ -24,7 +33,6 @@ export default function BonesLab() {
     const newAnalyzed = { ...analyzed, [id]: true };
     setAnalyzed(newAnalyzed);
 
-    // When all 3 are found, move to Adult phase automatically
     if (Object.keys(newAnalyzed).length === 3) {
       setTimeout(() => {
         setIsAdultPhase(true);
@@ -34,6 +42,8 @@ export default function BonesLab() {
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="dark-content" />
+
       {/* 1. BRIEFING OVERLAY */}
       {showBriefing && (
         <Animated.View entering={FadeIn} exiting={FadeOut} style={styles.briefingOverlay}>
@@ -48,11 +58,11 @@ export default function BonesLab() {
             </View>
             <View style={styles.infoBox}>
               <Text style={styles.infoText}>
-                Identify the growth gaps on the baby's skull to see how they fuse as we get older!
+                Identify the growth gaps on the baby's skull to see how they fuse as we get older! 🧠
               </Text>
             </View>
             <TouchableOpacity style={styles.startBtn} onPress={() => setShowBriefing(false)}>
-              <Text style={styles.startBtnText}>START MISSION</Text>
+              <Text style={styles.startBtnText}>START MISSION 🚀</Text>
             </TouchableOpacity>
           </Animated.View>
         </Animated.View>
@@ -61,7 +71,7 @@ export default function BonesLab() {
       {/* HEADER */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color="#FFF" />
+          <Ionicons name="arrow-back" size={24} color={ACADEMY_COLORS.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>SKULL GROWTH LAB</Text>
       </View>
@@ -71,12 +81,12 @@ export default function BonesLab() {
         {/* INSTRUCTION TEXT */}
         <View style={styles.instructionBox}>
            <Text style={styles.instructionMain}>
-             {isAdultPhase ? "OBSERVE ADULT FUSION" : "SCAN INFANT GAPS"}
+             {isAdultPhase ? "OBSERVE ADULT FUSION ✨" : "SCAN INFANT GAPS 🔍"}
            </Text>
            <Text style={styles.instructionSub}>
              {isAdultPhase 
                 ? "Notice how the red dots are gone? The bones have joined together!" 
-                : "Tap the 3 red medical icons to analyze the skull gaps."}
+                : "Tap the 3 medical icons to analyze the skull gaps."}
            </Text>
         </View>
 
@@ -85,7 +95,7 @@ export default function BonesLab() {
           <Ionicons 
             name="skull" 
             size={280} 
-            color={isAdultPhase ? "#334155" : "#1E293B"} 
+            color={isAdultPhase ? ACADEMY_COLORS.mint : ACADEMY_COLORS.text} 
             style={styles.skullBg} 
           />
 
@@ -94,11 +104,10 @@ export default function BonesLab() {
               {!isAdultPhase ? (
                 <TouchableOpacity onPress={() => handlePress(s.id)} style={styles.markerGroup}>
                    <Animated.View entering={ZoomIn} style={[styles.dot, analyzed[s.id] && styles.dotFound]}>
-                     <Ionicons name={analyzed[s.id] ? "checkmark" : "medical"} size={12} color="white" />
+                     <Ionicons name={analyzed[s.id] ? "checkmark" : "medical"} size={14} color="white" />
                    </Animated.View>
                 </TouchableOpacity>
               ) : (
-                /* AUTOMATICALLY SHOWS FUSED LINES IN PHASE 2 */
                 <Animated.View entering={FadeIn} style={styles.fusedContainer}>
                   <View style={styles.fusedLine} />
                 </Animated.View>
@@ -107,18 +116,18 @@ export default function BonesLab() {
           ))}
         </View>
 
-        {/* LOG EVIDENCE (Only appears after phase 2 starts) */}
+        {/* FINISH CARD */}
         {isAdultPhase && (
           <Animated.View entering={ZoomIn} style={styles.finishCard}>
              <View style={styles.successIcon}>
-                <Ionicons name="ribbon" size={30} color="white" />
+                <Ionicons name="ribbon" size={40} color="white" />
              </View>
              <Text style={styles.finishTitle}>GROWTH MATCHED</Text>
              <Text style={styles.finishBody}>
                You discovered that infants have open sutures while adults have fused ones!
              </Text>
              <TouchableOpacity style={styles.logBtn} onPress={() => router.push('/evidences')}>
-               <Text style={styles.logBtnText}>FINISH & LOG EVIDENCE</Text>
+               <Text style={styles.logBtnText}>FINISH & LOG EVIDENCE ✨</Text>
              </TouchableOpacity>
           </Animated.View>
         )}
@@ -128,42 +137,42 @@ export default function BonesLab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#020617' },
+  container: { flex: 1, backgroundColor: ACADEMY_COLORS.background },
   header: { flexDirection: 'row', alignItems: 'center', padding: 20, paddingTop: 60 },
-  headerTitle: { color: 'white', fontSize: 18, fontWeight: '900', marginLeft: 15 },
-  backBtn: { padding: 8, backgroundColor: '#1E293B', borderRadius: 12 },
+  headerTitle: { color: ACADEMY_COLORS.text, fontSize: 18, fontWeight: '900', marginLeft: 15 },
+  backBtn: { padding: 8, backgroundColor: 'white', borderRadius: 12, elevation: 2 },
   main: { padding: 20, alignItems: 'center' },
 
-  briefingOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(2, 6, 23, 0.95)', zIndex: 100, justifyContent: 'center', padding: 20 },
-  briefingCard: { backgroundColor: 'white', borderRadius: 30, padding: 20, alignItems: 'center' },
-  briefingTitle: { fontSize: 14, fontWeight: '900', color: '#64748B', letterSpacing: 2, marginBottom: 15 },
-  imageContainer: { width: '100%', height: 200, backgroundColor: '#F1F5F9', borderRadius: 20, overflow: 'hidden', marginBottom: 15 },
+  briefingOverlay: { ...StyleSheet.absoluteFillObject, backgroundColor: 'rgba(240, 249, 255, 0.95)', zIndex: 100, justifyContent: 'center', padding: 20 },
+  briefingCard: { backgroundColor: 'white', borderRadius: 30, padding: 25, alignItems: 'center', elevation: 5 },
+  briefingTitle: { fontSize: 14, fontWeight: '900', color: ACADEMY_COLORS.softGrey, letterSpacing: 2, marginBottom: 15 },
+  imageContainer: { width: '100%', height: 200, backgroundColor: '#F8FAFC', borderRadius: 20, overflow: 'hidden', marginBottom: 15 },
   briefingImage: { width: '100%', height: '100%' },
-  infoBox: { padding: 15, backgroundColor: '#F8FAFC', borderRadius: 15, marginBottom: 20 },
-  infoText: { textAlign: 'center', color: '#475569', fontSize: 13 },
-  startBtn: { backgroundColor: '#38BDF8', width: '100%', padding: 18, borderRadius: 15, alignItems: 'center' },
+  infoBox: { padding: 15, backgroundColor: ACADEMY_COLORS.background, borderRadius: 15, marginBottom: 20 },
+  infoText: { textAlign: 'center', color: ACADEMY_COLORS.text, fontSize: 14, fontWeight: '500' },
+  startBtn: { backgroundColor: ACADEMY_COLORS.mint, width: '100%', padding: 18, borderRadius: 15, alignItems: 'center', elevation: 3 },
   startBtnText: { color: 'white', fontWeight: '900' },
 
   instructionBox: { width: '100%', marginBottom: 20, alignItems: 'center' },
-  instructionMain: { color: '#38BDF8', fontWeight: '900', fontSize: 18, letterSpacing: 1 },
-  instructionSub: { color: '#94A3B8', fontSize: 12, textAlign: 'center', marginTop: 5 },
+  instructionMain: { color: ACADEMY_COLORS.mint, fontWeight: '900', fontSize: 18, letterSpacing: 1 },
+  instructionSub: { color: ACADEMY_COLORS.softGrey, fontSize: 13, textAlign: 'center', marginTop: 5 },
 
-  scanArea: { width: '100%', height: 400, backgroundColor: '#0F172A', borderRadius: 30, justifyContent: 'center', alignItems: 'center', borderWidth: 1, borderColor: '#1E293B' },
-  scanAreaAdult: { borderColor: '#10B981', backgroundColor: '#020617' },
-  skullBg: { opacity: 0.6 },
+  scanArea: { width: '100%', height: 400, backgroundColor: 'white', borderRadius: 30, justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#E2E8F0', elevation: 3 },
+  scanAreaAdult: { borderColor: ACADEMY_COLORS.mint, backgroundColor: '#E6FFFA' },
+  skullBg: { opacity: 0.15 },
   
   marker: { position: 'absolute' },
   markerGroup: { flexDirection: 'row', alignItems: 'center' },
-  dot: { width: 30, height: 30, borderRadius: 15, backgroundColor: '#EF4444', justifyContent: 'center', alignItems: 'center', borderWidth: 2, borderColor: '#FECACA' },
-  dotFound: { backgroundColor: '#10B981', borderColor: '#A7F3D0' },
+  dot: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#FF6B6B', justifyContent: 'center', alignItems: 'center', borderWidth: 3, borderColor: '#FFE3E3' },
+  dotFound: { backgroundColor: ACADEMY_COLORS.mint, borderColor: '#B2F5EA' },
   
   fusedContainer: { alignItems: 'center', justifyContent: 'center' },
-  fusedLine: { width: 35, height: 4, backgroundColor: '#334155', borderRadius: 2 },
+  fusedLine: { width: 35, height: 5, backgroundColor: ACADEMY_COLORS.mint, borderRadius: 3 },
 
-  finishCard: { marginTop: 20, backgroundColor: '#10B981', padding: 20, borderRadius: 25, width: '100%', alignItems: 'center' },
-  successIcon: { width: 60, height: 60, borderRadius: 30, backgroundColor: 'rgba(255,255,255,0.2)', justifyContent: 'center', alignItems: 'center', marginBottom: 10 },
-  finishTitle: { color: 'white', fontWeight: '900', fontSize: 18 },
-  finishBody: { color: 'white', fontSize: 12, textAlign: 'center', marginVertical: 10, opacity: 0.9 },
-  logBtn: { backgroundColor: '#064E3B', width: '100%', padding: 15, borderRadius: 15, alignItems: 'center' },
+  finishCard: { marginTop: 20, backgroundColor: 'white', padding: 25, borderRadius: 30, width: '100%', alignItems: 'center', elevation: 10 },
+  successIcon: { width: 80, height: 80, borderRadius: 40, backgroundColor: ACADEMY_COLORS.yellow, justifyContent: 'center', alignItems: 'center', marginBottom: 15 },
+  finishTitle: { color: ACADEMY_COLORS.text, fontWeight: '900', fontSize: 20 },
+  finishBody: { color: ACADEMY_COLORS.softGrey, fontSize: 14, textAlign: 'center', marginVertical: 15, lineHeight: 20 },
+  logBtn: { backgroundColor: ACADEMY_COLORS.mint, width: '100%', padding: 18, borderRadius: 20, alignItems: 'center', elevation: 3 },
   logBtnText: { color: 'white', fontWeight: '900' }
 });

@@ -1,10 +1,20 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Image, Alert, StatusBar } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Colors } from '../src/constants/Colors';
 import { Ionicons, MaterialCommunityIcons } from '@expo/vector-icons';
-import Animated, { FadeInDown, BounceIn, ZoomIn, FadeIn } from 'react-native-reanimated';
+import Animated, { FadeInDown, ZoomIn, FadeIn } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
+// Academy Palette - Consistent with your new theme
+const ACADEMY_COLORS = {
+  background: '#F0F9FF', 
+  text: '#2D3436',       
+  mint: '#4ECDC4',    
+  yellow: '#FFD166',  
+  purple: '#A29BFE',   
+  white: '#FFFFFF',
+  softGrey: '#94A3B8'
+};
 
 export default function GlassLab() {
   const router = useRouter();
@@ -25,7 +35,6 @@ export default function GlassLab() {
     setSelectedAnswer(option.id);
     if (option.correct) {
       setIsSolved(true);
-      // Navigate back to the evidence list after the animation
       setTimeout(() => {
         router.push('/evidences'); 
       }, 2500);
@@ -36,19 +45,21 @@ export default function GlassLab() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      {/* Header */}
+      <StatusBar barStyle="dark-content" />
+      
+      {/* Academy Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Ionicons name="arrow-back" size={24} color={Colors.primary} />
+          <Ionicons name="arrow-back" size={24} color={ACADEMY_COLORS.text} />
         </TouchableOpacity>
-        <Text style={styles.headerTitle}>GLASS FRACTURE LAB</Text>
+        <Text style={styles.headerTitle}>GLASS FRACTURE LAB 🔬</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.scrollContent}>
         
         {/* STEP 0: THE DIAGRAM */}
         <Animated.View entering={FadeInDown} style={styles.sectionCard}>
-          <Text style={styles.sectionTitle}>🔬 Evidence Scan</Text>
+          <Text style={styles.sectionTitle}>🔍 Evidence Scan</Text>
           <Image 
             source={require('../assets/images/glass_diagram.jpg')} 
             style={styles.mainDiagram}
@@ -57,7 +68,7 @@ export default function GlassLab() {
           {step === 0 && (
             <TouchableOpacity style={styles.nextBtn} onPress={() => setStep(1)}>
               <Text style={styles.nextBtnText}>IDENTIFY PATTERNS</Text>
-              <MaterialCommunityIcons name="magnify" size={20} color="#0F172A" />
+              <MaterialCommunityIcons name="magnify" size={20} color="white" />
             </TouchableOpacity>
           )}
         </Animated.View>
@@ -65,21 +76,21 @@ export default function GlassLab() {
         {/* STEP 1: DEFINITIONS */}
         {step >= 1 && (
           <Animated.View entering={FadeInDown} style={styles.sectionCard}>
-            <Text style={styles.sectionTitle}>🎯 Fracture Types</Text>
+            <Text style={[styles.sectionTitle, { color: ACADEMY_COLORS.purple }]}>🎯 Fracture Types</Text>
             <View style={styles.legendRow}>
               <View style={styles.legendItem}>
-                <Ionicons name="sunny" size={18} color={Colors.primary} />
+                <Ionicons name="sunny" size={18} color={ACADEMY_COLORS.mint} />
                 <Text style={styles.legendText}><Text style={styles.bold}>RADIAL:</Text> Outward lines.</Text>
               </View>
               <View style={styles.legendItem}>
-                <Ionicons name="radio-button-off" size={18} color="#FFD93D" />
+                <Ionicons name="radio-button-off" size={18} color={ACADEMY_COLORS.yellow} />
                 <Text style={styles.legendText}><Text style={styles.bold}>CONCENTRIC:</Text> Circular rings.</Text>
               </View>
             </View>
             {step === 1 && (
-              <TouchableOpacity style={[styles.nextBtn, { backgroundColor: '#FFD93D' }]} onPress={() => setStep(2)}>
-                <Text style={styles.nextBtnText}>VIEW IMPACT ANALYSIS</Text>
-                <MaterialCommunityIcons name="shield-search" size={20} color="#0F172A" />
+              <TouchableOpacity style={[styles.nextBtn, { backgroundColor: ACADEMY_COLORS.yellow }]} onPress={() => setStep(2)}>
+                <Text style={[styles.nextBtnText, { color: ACADEMY_COLORS.text }]}>VIEW IMPACT ANALYSIS</Text>
+                <MaterialCommunityIcons name="shield-search" size={20} color={ACADEMY_COLORS.text} />
               </TouchableOpacity>
             )}
           </Animated.View>
@@ -88,14 +99,14 @@ export default function GlassLab() {
         {/* STEP 2: THE 4R RULE */}
         {step >= 2 && (
           <Animated.View entering={FadeInDown} style={[styles.sectionCard, styles.logicCard]}>
-            <Text style={styles.sectionTitle}>🕵️ The "4R" Rule</Text>
+            <Text style={[styles.sectionTitle, { color: '#2C7A7B' }]}>🕵️ The "4R" Rule</Text>
             <View style={styles.ruleBox}>
               <Text style={styles.ruleItem}>
-                <Text style={styles.bold}>R</Text>adial cracks form <Text style={styles.bold}>R</Text>ight angles on the <Text style={styles.bold}>R</Text>ear side of <Text style={styles.bold}>R</Text>adiating impact.
+                <Text style={styles.boldText}><Text style={styles.highlight}>R</Text>adial cracks form <Text style={styles.highlight}>R</Text>ight angles on the <Text style={styles.highlight}>R</Text>ear side of <Text style={styles.highlight}>R</Text>adiating impact.</Text>
               </Text>
             </View>
             {step === 2 && (
-              <TouchableOpacity style={[styles.nextBtn, { backgroundColor: '#4CAF50' }]} onPress={() => setStep(3)}>
+              <TouchableOpacity style={[styles.nextBtn, { backgroundColor: ACADEMY_COLORS.mint }]} onPress={() => setStep(3)}>
                 <Text style={styles.nextBtnText}>START FIELD TEST</Text>
                 <MaterialCommunityIcons name="sword-cross" size={20} color="white" />
               </TouchableOpacity>
@@ -108,7 +119,7 @@ export default function GlassLab() {
           <Animated.View entering={ZoomIn} style={[styles.challengeCard, isSolved && styles.solvedCard]}>
             <View style={styles.challengeHeader}>
                 <Text style={styles.challengeTitle}>🚨 FIELD TEST: SIDE VIEW SCAN</Text>
-                {isSolved && <Ionicons name="checkmark-circle" size={24} color="#4CAF50" />}
+                {isSolved && <Ionicons name="checkmark-circle" size={24} color={ACADEMY_COLORS.mint} />}
             </View>
             
             <View style={styles.imageFrame}>
@@ -122,7 +133,7 @@ export default function GlassLab() {
             </View>
 
             <Text style={styles.questionText}>
-              The microscope shows right-angle ridges touching <Text style={styles.boldWhite}>Side B</Text>. Where did the impact come from?
+              The microscope shows right-angle ridges touching <Text style={styles.boldText}>Side B</Text>. Where did the impact come from?
             </Text>
             
             <View style={styles.optionsGrid}>
@@ -132,7 +143,7 @@ export default function GlassLab() {
                   disabled={isSolved}
                   style={[
                     styles.optionBtn,
-                    selectedAnswer === opt.id && { borderColor: opt.correct ? '#4CAF50' : '#FF4444' }
+                    selectedAnswer === opt.id && { borderColor: opt.correct ? ACADEMY_COLORS.mint : '#FF4444' }
                   ]}
                   onPress={() => handleAnswer(opt)}
                 >
@@ -141,7 +152,7 @@ export default function GlassLab() {
                     <Ionicons 
                       name={opt.correct ? "checkmark-circle" : "close-circle"} 
                       size={20} 
-                      color={opt.correct ? '#4CAF50' : '#FF4444'} 
+                      color={opt.correct ? ACADEMY_COLORS.mint : '#FF4444'} 
                     />
                   )}
                 </TouchableOpacity>
@@ -155,17 +166,10 @@ export default function GlassLab() {
       {isSolved && (
         <Animated.View entering={FadeIn.duration(400)} style={styles.successOverlay}>
           <Animated.View entering={ZoomIn.delay(200).springify()}>
-            <MaterialCommunityIcons name="seal-variant" size={120} color="#4CAF50" />
+            <MaterialCommunityIcons name="seal-variant" size={120} color={ACADEMY_COLORS.mint} />
           </Animated.View>
-          <Animated.Text entering={FadeInDown.delay(400)} style={styles.successTitle}>
-            EVIDENCE SECURED
-          </Animated.Text>
-          <Animated.Text entering={FadeInDown.delay(600)} style={styles.successSubtitle}>
-            Lab analysis complete. Heading back...
-          </Animated.Text>
-          <View style={styles.loaderBg}>
-            <Animated.View entering={FadeInDown.delay(800)} style={styles.loaderBar} />
-          </View>
+          <Text style={styles.successTitle}>MISSION COMPLETE</Text>
+          <Text style={styles.successSubtitle}>Glass analysis secured! ✨</Text>
         </Animated.View>
       )}
     </View>
@@ -173,79 +177,80 @@ export default function GlassLab() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0F172A' },
+  container: { flex: 1, backgroundColor: ACADEMY_COLORS.background },
   header: { flexDirection: 'row', alignItems: 'center', padding: 20, gap: 15 },
-  backBtn: { padding: 8, backgroundColor: 'rgba(56, 189, 248, 0.1)', borderRadius: 10 },
-  headerTitle: { color: '#FFF', fontSize: 18, fontWeight: '900', letterSpacing: 1 },
+  backBtn: { padding: 8, backgroundColor: 'white', borderRadius: 10, elevation: 2 },
+  headerTitle: { color: ACADEMY_COLORS.text, fontSize: 18, fontWeight: '900', letterSpacing: 1 },
   scrollContent: { padding: 20, paddingBottom: 100 },
   
   sectionCard: {
-    backgroundColor: '#1E293B',
-    borderRadius: 20,
+    backgroundColor: 'white',
+    borderRadius: 25,
     padding: 20,
     marginBottom: 20,
-    borderWidth: 1,
-    borderColor: 'rgba(56, 189, 248, 0.2)',
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
   },
-  sectionTitle: { color: Colors.primary, fontSize: 14, fontWeight: '800', marginBottom: 15, textTransform: 'uppercase' },
-  mainDiagram: { width: '100%', height: 200, backgroundColor: '#000', borderRadius: 12 },
+  sectionTitle: { color: ACADEMY_COLORS.mint, fontSize: 14, fontWeight: '800', marginBottom: 15, textTransform: 'uppercase' },
+  mainDiagram: { width: '100%', height: 200, backgroundColor: '#FFFFFF', borderRadius: 15 },
   
   nextBtn: { 
-    backgroundColor: Colors.primary, 
+    backgroundColor: ACADEMY_COLORS.mint, 
     flexDirection: 'row', 
     justifyContent: 'center', 
     alignItems: 'center', 
     padding: 15, 
-    borderRadius: 12, 
+    borderRadius: 15, 
     marginTop: 20,
     gap: 10 
   },
-  nextBtnText: { color: '#0F172A', fontWeight: '900', fontSize: 13 },
+  nextBtnText: { color: 'white', fontWeight: '900', fontSize: 13 },
 
   legendRow: { gap: 10 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  legendText: { color: '#94A3B8', fontSize: 13 },
-  bold: { fontWeight: '900', color: '#FFF' },
+  legendText: { color: ACADEMY_COLORS.softGrey, fontSize: 14 },
+  bold: { fontWeight: '900', color: ACADEMY_COLORS.text },
 
-  logicCard: { backgroundColor: '#162033', borderColor: '#4CAF50' },
-  ruleBox: { padding: 15, backgroundColor: 'rgba(0,0,0,0.3)', borderRadius: 12 },
-  ruleItem: { color: '#FFF', fontSize: 14, lineHeight: 22 },
+  logicCard: { backgroundColor: '#E6FFFA', borderColor: ACADEMY_COLORS.mint, borderWidth: 1 },
+  ruleBox: { padding: 15, backgroundColor: 'white', borderRadius: 15 },
+  ruleItem: { color: ACADEMY_COLORS.text, fontSize: 15, lineHeight: 22 },
+  highlight: { color: ACADEMY_COLORS.mint, fontWeight: '900' },
+  boldText: { fontWeight: '700' },
 
-  challengeCard: { backgroundColor: '#1E293B', borderRadius: 20, padding: 20, borderWidth: 2, borderColor: Colors.primary },
-  solvedCard: { borderColor: '#4CAF50' },
+  challengeCard: { backgroundColor: 'white', borderRadius: 25, padding: 20, borderWidth: 2, borderColor: ACADEMY_COLORS.mint },
+  solvedCard: { borderColor: ACADEMY_COLORS.mint },
   challengeHeader: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 10, marginBottom: 15 },
-  challengeTitle: { color: Colors.primary, fontWeight: '900', fontSize: 12, letterSpacing: 1 },
+  challengeTitle: { color: ACADEMY_COLORS.mint, fontWeight: '900', fontSize: 12, letterSpacing: 1 },
   
-  imageFrame: { width: '100%', height: 180, backgroundColor: '#FFF', borderRadius: 12, marginBottom: 15, overflow: 'hidden' },
+  imageFrame: { width: '100%', height: 180, backgroundColor: '#F8FAFC', borderRadius: 15, marginBottom: 15, overflow: 'hidden', borderWidth: 1, borderColor: '#E2E8F0' },
   challengeImage: { width: '100%', height: '100%' },
-  label: { position: 'absolute', top: '40%', backgroundColor: 'rgba(56, 189, 248, 0.8)', padding: 5, borderRadius: 4 },
+  label: { position: 'absolute', top: '40%', backgroundColor: ACADEMY_COLORS.mint, padding: 6, borderRadius: 8 },
   labelTxt: { color: '#FFF', fontSize: 10, fontWeight: '900' },
   
-  questionText: { color: 'white', textAlign: 'center', marginBottom: 20, fontWeight: '600', lineHeight: 20 },
-  boldWhite: { color: Colors.primary, fontWeight: '900' },
+  questionText: { color: ACADEMY_COLORS.text, textAlign: 'center', marginBottom: 20, fontWeight: '600', lineHeight: 22 },
   
   optionsGrid: { gap: 10 },
   optionBtn: { 
     flexDirection: 'row', 
     justifyContent: 'space-between', 
     alignItems: 'center', 
-    backgroundColor: '#0F172A', 
+    backgroundColor: '#F8FAFC', 
     padding: 16, 
-    borderRadius: 10, 
+    borderRadius: 15, 
     borderWidth: 1, 
-    borderColor: '#334155' 
+    borderColor: '#E2E8F0' 
   },
-  optionText: { color: 'white', fontWeight: 'bold', flex: 1 },
+  optionText: { color: ACADEMY_COLORS.text, fontWeight: 'bold', flex: 1 },
 
   successOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(15, 23, 42, 0.98)',
+    backgroundColor: 'rgba(240, 249, 255, 0.98)',
     justifyContent: 'center',
     alignItems: 'center',
     zIndex: 1000,
   },
-  successTitle: { color: '#4CAF50', fontSize: 32, fontWeight: '900', marginTop: 20, letterSpacing: 2 },
-  successSubtitle: { color: '#94A3B8', fontSize: 16, marginTop: 10, textAlign: 'center', paddingHorizontal: 40 },
-  loaderBg: { width: 200, height: 4, backgroundColor: '#1E293B', borderRadius: 2, marginTop: 40, overflow: 'hidden' },
-  loaderBar: { width: '100%', height: '100%', backgroundColor: '#4CAF50' },
+  successTitle: { color: ACADEMY_COLORS.text, fontSize: 32, fontWeight: '900', marginTop: 20, letterSpacing: 2 },
+  successSubtitle: { color: ACADEMY_COLORS.softGrey, fontSize: 16, marginTop: 10, textAlign: 'center' },
 });
