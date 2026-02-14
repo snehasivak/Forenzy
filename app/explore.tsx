@@ -59,7 +59,7 @@ const FlippableFlashcard = ({ question, children, color, icon: Icon, fullWidth =
             </View>
 
             <Pressable style={[styles.gotItBtn, { backgroundColor: color }]} onPress={() => setModalVisible(false)}>
-              <Text style={styles.gotItText}>GOT IT, DETECTIVE! 🔍</Text>
+              <Text style={styles.gotItText}>GOT IT, DETECTIVE!</Text>
             </Pressable>
           </View>
         </View>
@@ -92,7 +92,7 @@ export default function ExploreScreen() {
         </Pressable>
 
         <Text style={styles.headerTitle}>Learning Lab</Text>
-        <Text style={styles.headerSubtitle}>Tap a card to start your training! 🔍</Text>
+        <Text style={styles.headerSubtitle}>Tap a card to start your training!</Text>
 
         <View style={styles.grid}>
           <FlippableFlashcard 

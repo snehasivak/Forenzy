@@ -94,7 +94,7 @@ export default function FingerprintLab() {
         {/* PHASE 1: LEARN */}
         {gameState === 'LEARN' && (
           <View style={styles.fullWidth}>
-            <Text style={styles.subHeader}>STEP 1: MEMORIZE THE SHAPES 🔍</Text>
+            <Text style={styles.subHeader}>STEP 1: MEMORIZE THE SHAPES</Text>
             
             <Animated.View key={currentCard} entering={FlipInYRight.duration(600)} style={styles.card}>
               <View style={styles.imageFrame}>
@@ -119,7 +119,7 @@ export default function FingerprintLab() {
                 </TouchableOpacity>
               ) : (
                 <TouchableOpacity onPress={() => setGameState('QUIZ')} style={styles.startQuizBtn}>
-                  <Text style={styles.startQuizText}>START QUIZ 🧠</Text>
+                  <Text style={styles.startQuizText}>START QUIZ</Text>
                   <Ionicons name="play" size={18} color="white" />
                 </TouchableOpacity>
               )}

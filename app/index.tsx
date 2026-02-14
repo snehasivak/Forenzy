@@ -57,7 +57,7 @@ export default function WelcomeScreen() {
           onChangeText={setName}
           autoCapitalize="words"
         />
-        <Text style={styles.hintText}>Your mystery-solving journey starts here! ✨</Text>
+        <Text style={styles.hintText}>Your mystery-solving journey starts here!</Text>
       </View>
 
       <View style={styles.footer}>

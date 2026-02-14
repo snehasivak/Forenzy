@@ -19,8 +19,6 @@ const EVIDENCE_DATA = [
   { id: 'blood', title: 'Bloodstains', image: require('../assets/images/bloodstain.png') },
   { id: 'bones', title: 'Bones', image: require('../assets/images/bones.gif') },
   { id: 'fingerprint', title: 'Fingerprint', image: require('../assets/images/fingerprint.jpg') },
-  { id: 'hair', title: 'Hair', image: require('../assets/images/hair.jpg') },
-  { id: 'soil', title: 'Soil', image: require('../assets/images/soil.jpg') },
 ];
 
 export default function EvidencesScreen() {

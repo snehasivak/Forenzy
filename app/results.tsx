@@ -43,7 +43,7 @@ export default function ResultsScreen() {
         label: 'Junior Agent', 
         icon: Star, 
         color: '#CD7F32', // Bronze
-        message: 'Good start! Keep practicing to sharpen your skills. 🧪' 
+        message: 'Good start! Keep practicing to sharpen your skills.' 
       };
     }
   };
