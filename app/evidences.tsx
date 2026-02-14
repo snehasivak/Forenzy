@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const EVIDENCE_DATA = [
   { id: 'glass', title: 'Glass', image: require('../assets/images/glass.jpg') },
-  { id: 'bloodstains', title: 'Bloodstains', image: require('../assets/images/bloodstain.png') },
+  { id: 'blood', title: 'Bloodstains', image: require('../assets/images/bloodstain.png') },
   { id: 'bones', title: 'Bones', image: require('../assets/images/bones.gif') },
   { id: 'fingerprint', title: 'Fingerprint', image: require('../assets/images/fingerprint.jpg') },
   { id: 'hair', title: 'Hair', image: require('../assets/images/hair.jpg') },
