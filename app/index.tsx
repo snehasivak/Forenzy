@@ -1,19 +1,36 @@
-import React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TouchableOpacity, StatusBar, TextInput, Alert } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../src/constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-// 1. Import the router
 import { useRouter } from 'expo-router';
+// 1. Import the global user hook
+import { useUser } from '../UserContext'; 
 
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
-  // 2. Initialize the router
   const router = useRouter();
+  
+  // 2. Access the global setUserName function
+  const { setUserName } = useUser();
+  
+  const [name, setName] = useState('');
 
   const dynamicPadding = {
     paddingTop: insets.top > 0 ? insets.top : 20,
     paddingBottom: insets.bottom > 0 ? insets.bottom : 20,
+  };
+
+  const handleInitialize = () => {
+    if (name.trim()) {
+      // 3. Save name globally so it's remembered throughout the app
+      setUserName(name.trim()); 
+      
+      // Navigate to menu (no need to pass params in URL anymore)
+      router.push('/menu');
+    } else {
+      Alert.alert("Access Denied", "Please identify yourself, Detective!");
+    }
   };
 
   return (
@@ -28,11 +45,24 @@ export default function WelcomeScreen() {
         <Text style={styles.subtitle}>Digital Evidence Management</Text>
       </View>
 
+      <View style={styles.inputContainer}>
+        <Text style={styles.inputLabel}>IDENTIFY YOURSELF, DETECTIVE:</Text>
+        <TextInput
+          style={styles.nameInput}
+          placeholder="Enter Name..."
+          placeholderTextColor="rgba(148, 163, 184, 0.5)"
+          value={name}
+          onChangeText={setName}
+          autoCapitalize="words"
+          returnKeyType="done"
+          onSubmitEditing={handleInitialize}
+        />
+      </View>
+
       <View style={styles.footer}>
         <TouchableOpacity 
           style={styles.primaryButton}
-          // 3. Update the onPress to navigate to your menu
-          onPress={() => router.push('/menu')} 
+          onPress={handleInitialize} 
           activeOpacity={0.8}
         >
           <Text style={styles.buttonText}>INITIALIZE SCAN</Text>
@@ -42,7 +72,6 @@ export default function WelcomeScreen() {
   );
 }
 
-// ... styles remain the same as your teammate's code ...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -81,6 +110,27 @@ const styles = StyleSheet.create({
     color: '#94A3B8',
     marginTop: 8,
     textTransform: 'uppercase',
+  },
+  inputContainer: {
+    width: '100%',
+    paddingHorizontal: 10,
+  },
+  inputLabel: {
+    color: Colors.primary,
+    fontSize: 12,
+    fontWeight: 'bold',
+    marginBottom: 10,
+    letterSpacing: 1,
+  },
+  nameInput: {
+    backgroundColor: Colors.card,
+    borderWidth: 1,
+    borderColor: 'rgba(78, 205, 196, 0.3)',
+    borderRadius: 8,
+    padding: 15,
+    color: 'white',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   footer: {
     gap: 12,
