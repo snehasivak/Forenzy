@@ -15,13 +15,13 @@
 https://forenzy.netlify.app
 
 ### Project Description
-An interactive learning application that let's kids get familiar with the basics of forensic analysis. With quizzes and flash cards, kids can explore on their own and use the AI chatbot to know more.
+Forenzy is an interactive "Detective Academy" designed to teach school students the fundamentals of forensic science through gamified lab simulations. It simplifies complex topics like DNA, fingerprints, and skull growth into engaging, kid-friendly digital experiments.
 
 ### The Problem statement
-
+Many school students find forensic science and advanced biology intimidating or abstract. Traditional textbooks lack the interactive "hands-on" feel required to spark genuine interest in investigative sciences.
 
 ### The Solution
-[How are you solving it?]
+Forenzy provides a digital "Junior Lab" where students can perform virtual experiments, such as analyzing glass fracture patterns using the "4R Rule" or conducting chemical blood tests like Kastle-Meyer and Luminol. It uses a friendly AI assistant powered by Groq to answer student questions in a kid-appropriate, encouraging tone.
 
 ---
 
@@ -31,19 +31,21 @@ An interactive learning application that let's kids get familiar with the basics
 
 **For Software:**
 - Languages used: Typescript,  Javascript
-- Frameworks used: Expo, React Native for Web
-- Libraries used: React Native Reanimated (Animations), Expo Router (Navigation), Ionicons (UI Icons)
+- Frameworks used: React Native (Expo), Expo Router
+- Libraries used: React Native Reanimated (Animations), Expo Router (Navigation), Ionicons (UI Icons), Lucide-React-Native (icons), Expo-Public-Env
 - Tools used: VS Code, Git, Netlify (Hosting), Groq Cloud Console (AI)
 
 ---
 
 ## Features
 
-List the key features of your project:
-- Feature 1: [Description]
-- Feature 2: [Description]
-- Feature 3: [Description]
-- Feature 4: [Description]
+Junior Lab AI: A Groq-powered chatbot that uses Llama 3.3 to explain forensic concepts using fun analogies and emojis.
+
+Interactive Evidence Labs: Specialized modules for Glass Fracture (4R Rule), Blood Analysis (Kastle-Meyer/Luminol), Fingerprint Identification, and Skull Growth.
+
+Flippable Learning Cards: Educational flashcards that reveal "Science Secrets" with 3D-like animations.
+
+Detective Test Mode: A quiz system that evaluates what the student has learned, awarding titles like "Master Detective" or "Junior Agent."
 
 ---
 
@@ -88,13 +90,19 @@ npx expo export --platform web
 
 **System Architecture:**
 
-![Architecture Diagram](docs/architecture.png)
-*Explain your system architecture - components, data flow, tech stack interaction*
+The application is built on React Native (Expo). It interfaces with the Groq API over HTTPS to fetch AI responses, using Environment Variables (.env) to secure the API key from public exposure. Data flow is managed locally via React Context to track the student's name and progress.
 
 **Application Workflow:**
 
-![Workflow](docs/workflow.png)
-*Add caption explaining your workflow*
+Entry: User enters their name on the Index page.
+
+Academy: User selects a mission (Lab) or asks the AI a question.
+
+Experimentation: User performs interactive tasks (flipping cards, dropping reagents).
+
+Evaluation: User completes the Final Exam.
+
+Certification: User receives a Detective Title based on their score.
 
 ---
 
@@ -115,54 +123,12 @@ npx expo export --platform web
 
 ## Additional Documentation
 
-### For Web Projects with Backend:
-
-#### API Documentation
-
-**Base URL:** `https://api.yourproject.com`
-
-##### Endpoints
-
-**GET /api/endpoint**
-- **Description:** [What it does]
-- **Parameters:**
-  - `param1` (string): [Description]
-  - `param2` (integer): [Description]
-- **Response:**
-```json
-{
-  "status": "success",
-  "data": {}
-}
-```
-
-**POST /api/endpoint**
-- **Description:** [What it does]
-- **Request Body:**
-```json
-{
-  "field1": "value1",
-  "field2": "value2"
-}
-```
-- **Response:**
-```json
-{
-  "status": "success",
-  "message": "Operation completed"
-}
-```
-
-[Add more endpoints as needed...]
-
----
-
 ### For Mobile Apps:
 
 #### App Flow Diagram
 
-![App Flow](docs/app-flow.png)
-*Explain the user flow through your application*
+App Flow Diagram
+The user flows from a Welcome Screen to a Main Menu. From the menu, they can branch into the Junior Lab AI for Q&A, or the Explore section for specialized labs. All paths eventually lead to the Test Mode and the Results summary.
 
 #### Installation Guide
 
@@ -184,158 +150,17 @@ npx expo export --platform web
 
 **Building from Source:**
 ```bash
-# For Android
-flutter build apk
-# or
-./gradlew assembleDebug
+# Install dependencies
+npm install
 
-# For iOS
-flutter build ios
-# or
-xcodebuild -workspace App.xcworkspace -scheme App -configuration Debug
-```
+# To run in development mode
+npx expo start
 
----
+# To build for Android
+npx expo run:android
 
-### For Hardware Projects:
-
-#### Bill of Materials (BOM)
-
-| Component | Quantity | Specifications | Price | Link/Source |
-|-----------|----------|----------------|-------|-------------|
-| Arduino Uno | 1 | ATmega328P, 16MHz | ₹450 | [Link] |
-| LED | 5 | Red, 5mm, 20mA | ₹5 each | [Link] |
-| Resistor | 5 | 220Ω, 1/4W | ₹1 each | [Link] |
-| Breadboard | 1 | 830 points | ₹100 | [Link] |
-| Jumper Wires | 20 | Male-to-Male | ₹50 | [Link] |
-| [Add more...] | | | | |
-
-**Total Estimated Cost:** ₹[Amount]
-
-#### Assembly Instructions
-
-**Step 1: Prepare Components**
-1. Gather all components listed in the BOM
-2. Check component specifications
-3. Prepare your workspace
-![Step 1](images/assembly-step1.jpg)
-*Caption: All components laid out*
-
-**Step 2: Build the Power Supply**
-1. Connect the power rails on the breadboard
-2. Connect Arduino 5V to breadboard positive rail
-3. Connect Arduino GND to breadboard negative rail
-![Step 2](images/assembly-step2.jpg)
-*Caption: Power connections completed*
-
-**Step 3: Add Components**
-1. Place LEDs on breadboard
-2. Connect resistors in series with LEDs
-3. Connect LED cathodes to GND
-4. Connect LED anodes to Arduino digital pins (2-6)
-![Step 3](images/assembly-step3.jpg)
-*Caption: LED circuit assembled*
-
-**Step 4: [Continue for all steps...]**
-
-**Final Assembly:**
-![Final Build](images/final-build.jpg)
-*Caption: Completed project ready for testing*
-
----
-
-### For Scripts/CLI Tools:
-
-#### Command Reference
-
-**Basic Usage:**
-```bash
-python script.py [options] [arguments]
-```
-
-**Available Commands:**
-- `command1 [args]` - Description of what command1 does
-- `command2 [args]` - Description of what command2 does
-- `command3 [args]` - Description of what command3 does
-
-**Options:**
-- `-h, --help` - Show help message and exit
-- `-v, --verbose` - Enable verbose output
-- `-o, --output FILE` - Specify output file path
-- `-c, --config FILE` - Specify configuration file
-- `--version` - Show version information
-
-**Examples:**
-
-```bash
-# Example 1: Basic usage
-python script.py input.txt
-
-# Example 2: With verbose output
-python script.py -v input.txt
-
-# Example 3: Specify output file
-python script.py -o output.txt input.txt
-
-# Example 4: Using configuration
-python script.py -c config.json --verbose input.txt
-```
-
-#### Demo Output
-
-**Example 1: Basic Processing**
-
-**Input:**
-```
-This is a sample input file
-with multiple lines of text
-for demonstration purposes
-```
-
-**Command:**
-```bash
-python script.py sample.txt
-```
-
-**Output:**
-```
-Processing: sample.txt
-Lines processed: 3
-Characters counted: 86
-Status: Success
-Output saved to: output.txt
-```
-
-**Example 2: Advanced Usage**
-
-**Input:**
-```json
-{
-  "name": "test",
-  "value": 123
-}
-```
-
-**Command:**
-```bash
-python script.py -v --format json data.json
-```
-
-**Output:**
-```
-[VERBOSE] Loading configuration...
-[VERBOSE] Parsing JSON input...
-[VERBOSE] Processing data...
-{
-  "status": "success",
-  "processed": true,
-  "result": {
-    "name": "test",
-    "value": 123,
-    "timestamp": "2024-02-07T10:30:00"
-  }
-}
-[VERBOSE] Operation completed in 0.23s
+# To build for iOS
+npx expo run:ios
 ```
 
 ---
@@ -347,34 +172,41 @@ python script.py -v --format json data.json
 
 *Explain what the video demonstrates - key features, user flow, technical highlights*
 
-### Additional Demos
-[Add any extra demo materials/links - Live site, APK download, online demo, etc.]
-
 ---
 
 ## AI Tools Used (Optional - For Transparency Bonus)
 
 If you used AI tools during development, document them here for transparency:
 
-**Tool Used:** Gemini
+**Tool Used:** Gemini 3 Flash
 
 **Purpose:** [What you used it for]
-- Example: "Generated boilerplate React components"
-- Example: "Debugging assistance for async functions"
-- Example: "Code review and optimization suggestions"
+
+UI Makeover: Refactored the entire application from a dark theme to a kid-friendly "Detective Academy" theme (Mint and Airy Blue).
+
+Interactive Logic: Assisted in creating state management for the "4R Rule" Glass Lab and the Luminol "Dark Room" effect in the Blood Lab.
+
+Code Refactoring: Provided standard code structures for React Native components like the Junior Lab AI and the Pattern Academy flashcards.
+
+Deployment Support: Provided diagnosis and solutions for Netlify secret scanner errors and environment variable configuration.
 
 **Key Prompts Used:**
-- "Create a REST API endpoint for user authentication"
-- "Debug this async function that's causing race conditions"
-- "Optimize this database query for better performance"
+"Update the theme of evidences page to a bright, positive laboratory style for younger students."
 
-**Percentage of AI-generated code:** 99%
+"Refactor the Blood Lab code to include a dark toggle for Luminol testing."
+
+"Why is a Netlify secret scanner error occurring with my EXPO_PUBLIC_GROQ_API_KEY?"
+
+**Percentage of AI-generated code:** 92%
 
 **Human Contributions:**
-- Architecture design and planning
-- Custom business logic implementation
-- Integration and testing
-- UI/UX design decisions
+Core Concept: Conceived the "Detective Academy" theme for school forensic education.
+
+System Architecture: Planned the integration between Expo (React Native) and the Groq LLM API.
+
+Asset Management: Curated and organized the specific images and GIFs used for glass, blood, and fingerprint evidence.
+
+Deployment Management: Manually configured Netlify environment variables and build settings to host the final project.
 
 *Note: Proper documentation of AI usage demonstrates transparency and earns bonus points in evaluation!*
 
@@ -382,9 +214,8 @@ If you used AI tools during development, document them here for transparency:
 
 ## Team Contributions
 
-- [Name 1]: [Specific contributions - e.g., Frontend development, API integration, etc.]
-- [Name 2]: [Specific contributions - e.g., Backend development, Database design, etc.]
-- [Name 3]: [Specific contributions - e.g., UI/UX design, Testing, Documentation, etc.]
+- Sneha Sivakumar: Menu page and its routing, Flashcards, Junior Lab AI, Final Test Page, Deploying.
+- Maryam Mohamed Yahya: Evidenses page and its routing, Landing page, Setup Virtual labs and quizzes for each evidenses, Readme updates.
 
 ---
 
