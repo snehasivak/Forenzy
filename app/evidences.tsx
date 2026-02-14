@@ -7,7 +7,7 @@ import { Ionicons } from '@expo/vector-icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 const EVIDENCE_DATA = [
-  { id: 'ballistics', title: 'Ballistics', image: require('../assets/images/ballistics.jpg') },
+  { id: 'glass', title: 'Glass', image: require('../assets/images/glass.jpg') },
   { id: 'bloodstains', title: 'Bloodstains', image: require('../assets/images/bloodstain.png') },
   { id: 'bones', title: 'Bones', image: require('../assets/images/bones.gif') },
   { id: 'fingerprint', title: 'Fingerprint', image: require('../assets/images/fingerprint.jpg') },
