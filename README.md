@@ -75,16 +75,13 @@ npx expo export --platform web
 
 ### For Software:
 
-#### Screenshots (Add at least 3)
+#### Screenshots
+| Onboarding Screen    | Navigation  | AI Assistant    | Learn  | Evidences | Badges |
+| ---------------------| ------------| ----------------| -------| ----------|--------|
+| <img width="300" height="600" alt="Login" src="https://github.com/user-attachments/assets/19a3526b-f921-4eb7-8a5a-7f8a2c90ecd0" />  | <img width="300" height="600" alt="Choose" src="https://github.com/user-attachments/assets/bffdc029-bbe3-4a6f-8c75-2d45576d6cd4" /> | <img width="300" height="600" alt="AI" src="https://github.com/user-attachments/assets/d53b76ad-2f36-4b78-bffc-8d2e8f283d5b" /> | <img width="300" height="600" alt="Learn" src="https://github.com/user-attachments/assets/f327d166-2749-4b69-a7f1-6e1e310b46e8" /> | <img width="300" height="600" alt="Evidences" src="https://github.com/user-attachments/assets/58051f38-087e-4e6d-bc0b-d9804d20c7c5" /> | <img width="300" height="600" alt="Badge" src="https://github.com/user-attachments/assets/9ff87ddc-7613-4179-b780-b74b55b5d4ac" /> | 
+| Kids enter the app with their name | Choose to chat, learn the basics or take a test | Clears confusions | Learn the basics of Forensics | Gain more insights with virtual labs| Test your knowledge
 
-![Screenshot1](Add screenshot 1 here with proper name)
-*Add caption explaining what this shows*
 
-![Screenshot2](Add screenshot 2 here with proper name)
-*Add caption explaining what this shows*
-
-![Screenshot3](Add screenshot 3 here with proper name)
-*Add caption explaining what this shows*
 
 #### Diagrams
 
@@ -103,21 +100,6 @@ Experimentation: User performs interactive tasks (flipping cards, dropping reage
 Evaluation: User completes the Final Exam.
 
 Certification: User receives a Detective Title based on their score.
-
----
-
-#### Build Photos
-
-![Team](Add photo of your team here)
-
-![Components](Add photo of your components here)
-*List out all components shown*
-
-![Build](Add photos of build process here)
-*Explain the build steps*
-
-![Final](Add photo of final product here)
-*Explain the final build*
 
 ---
 
@@ -168,9 +150,12 @@ npx expo run:ios
 ## Project Demo
 
 ### Video
-[Add your demo video link here - YouTube, Google Drive, etc.]
 
-*Explain what the video demonstrates - key features, user flow, technical highlights*
+
+https://github.com/user-attachments/assets/6a2eb92e-5a83-4790-8409-d9f1cd99beb4
+
+
+*Forenzy is an interactive kid-friendly app built with React Native and Expo that simplifies forensic science for school students through laboratory simulations. The application allows users to engage in hands-on digital experiments—such as analyzing glass fracture patterns with the "4R Rule," testing blood samples via Kastle-Meyer and Luminol reagents, identifying fingerprint patterns, and observing cranial suture fusion—all while receiving guidance from a Groq-powered AI assistant that explains complex concepts using fun analogies.*
 
 ---
 
@@ -180,9 +165,9 @@ If you used AI tools during development, document them here for transparency:
 
 **Tool Used:** Gemini 3 Flash
 
-**Purpose:** [What you used it for]
+**Purpose:**
 
-UI Makeover: Refactored the entire application from a dark theme to a kid-friendly "Detective Academy" theme (Mint and Airy Blue).
+UI Makeover: Refactored the entire application from a dark theme to a kid-friendly theme.
 
 Interactive Logic: Assisted in creating state management for the "4R Rule" Glass Lab and the Luminol "Dark Room" effect in the Blood Lab.
 
@@ -221,12 +206,7 @@ Deployment Management: Manually configured Netlify environment variables and bui
 
 ## License
 
-This project is licensed under the [LICENSE_NAME] License - see the [LICENSE](LICENSE) file for details.
-
-**Common License Options:**
-- MIT License (Permissive, widely used)
-- Apache 2.0 (Permissive with patent grant)
-- GPL v3 (Copyleft, requires derivative works to be open source)
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
 ---
 
