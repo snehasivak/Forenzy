@@ -2,24 +2,23 @@
   <img src="./img.png" alt="Project Banner" width="100%">
 </p>
 
-# [Project Name] 🎯
+# Forenzy 🎯
 
 ## Basic Details
 
-### Team Name: [Name]
+### Team Name: Apricodes
 
 ### Team Members
-- Member 1: [Name] - [College]
-- Member 2: [Name] - [College]
-
+- Member 1: Sneha Sivakumar - Cochin University of Science and Technology
+- Member 2: Maryam Mohamed Yahya - Cochin University of Science and Technology
 ### Hosted Project Link
-[mention your project hosted link here]
+https://forenzy.netlify.app
 
 ### Project Description
-[2-3 lines about what your project does]
+An interactive learning application that let's kids get familiar with the basics of forensic analysis. With quizzes and flash cards, kids can explore on their own and use the AI chatbot to know more.
 
 ### The Problem statement
-[What problem are you solving?]
+
 
 ### The Solution
 [How are you solving it?]
@@ -31,15 +30,10 @@
 ### Technologies/Components Used
 
 **For Software:**
-- Languages used: [e.g., JavaScript, Python, Java]
-- Frameworks used: [e.g., React, Django, Spring Boot]
-- Libraries used: [e.g., axios, pandas, JUnit]
-- Tools used: [e.g., VS Code, Git, Docker]
-
-**For Hardware:**
-- Main components: [List main components]
-- Specifications: [Technical specifications]
-- Tools required: [List tools needed]
+- Languages used: Typescript,  Javascript
+- Frameworks used: Expo, React Native for Web
+- Libraries used: React Native Reanimated (Animations), Expo Router (Navigation), Ionicons (UI Icons)
+- Tools used: VS Code, Git, Netlify (Hosting), Groq Cloud Console (AI)
 
 ---
 
@@ -59,23 +53,21 @@ List the key features of your project:
 
 #### Installation
 ```bash
-[Installation commands - e.g., npm install, pip install -r requirements.txt]
+# Clone the repository
+git clone https://github.com/snehasivak/Forenzy.git
+
+# Install dependencies
+npm install
 ```
 
 #### Run
 ```bash
-[Run commands - e.g., npm start, python app.py]
+# Start the development server
+npx expo start
+
+# Build for production (Web)
+npx expo export --platform web
 ```
-
-### For Hardware:
-
-#### Components Required
-[List all components needed with specifications]
-
-#### Circuit Setup
-[Explain how to set up the circuit]
-
----
 
 ## Project Documentation
 
@@ -105,16 +97,6 @@ List the key features of your project:
 *Add caption explaining your workflow*
 
 ---
-
-### For Hardware:
-
-#### Schematic & Circuit
-
-![Circuit](Add your circuit diagram here)
-*Add caption explaining connections*
-
-![Schematic](Add your schematic diagram here)
-*Add caption explaining the schematic*
 
 #### Build Photos
 
@@ -374,7 +356,7 @@ python script.py -v --format json data.json
 
 If you used AI tools during development, document them here for transparency:
 
-**Tool Used:** [e.g., GitHub Copilot, v0.dev, Cursor, ChatGPT, Claude]
+**Tool Used:** Gemini
 
 **Purpose:** [What you used it for]
 - Example: "Generated boilerplate React components"
@@ -386,7 +368,7 @@ If you used AI tools during development, document them here for transparency:
 - "Debug this async function that's causing race conditions"
 - "Optimize this database query for better performance"
 
-**Percentage of AI-generated code:** [Approximately X%]
+**Percentage of AI-generated code:** 99%
 
 **Human Contributions:**
 - Architecture design and planning
