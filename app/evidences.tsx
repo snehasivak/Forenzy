@@ -1,113 +1,167 @@
 import React from 'react';
-import { StyleSheet, Text, View, Pressable, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Pressable, ImageBackground } from 'react-native';
 import { useRouter } from 'expo-router';
 import { Colors } from '../src/constants/Colors';
-import { Fingerprint, TestTube, Camera, FileText, CheckCircle } from 'lucide-react-native';
+import { CheckCircle } from 'lucide-react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-const EvidenceItem = ({ title, description, icon: Icon, color }) => (
-  <View style={styles.evidenceCard}>
-    <View style={[styles.iconBox, { backgroundColor: color }]}>
-      <Icon size={28} color="white" />
-    </View>
-    <View style={styles.textContainer}>
-      <Text style={styles.evidenceTitle}>{title}</Text>
-      <Text style={styles.evidenceDescription}>{description}</Text>
-    </View>
-  </View>
-);
+const EVIDENCE_DATA = [
+  { id: 'glass', title: 'Glass', image: require('../assets/images/glass.jpg') },
+  { id: 'bloodstains', title: 'Bloodstains', image: require('../assets/images/bloodstain.png') },
+  { id: 'bones', title: 'Bones', image: require('../assets/images/bones.gif') },
+  { id: 'fingerprint', title: 'Fingerprint', image: require('../assets/images/fingerprint.jpg') },
+  { id: 'hair', title: 'Hair', image: require('../assets/images/hair.jpg') },
+  { id: 'soil', title: 'Soil', image: require('../assets/images/soil.jpg') },
+];
 
 export default function EvidencesScreen() {
   const router = useRouter();
+  const insets = useSafeAreaInsets();
 
   return (
-    <View style={{ flex: 1, backgroundColor: Colors.background }}>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
-        {/* Back Button */}
-        <Pressable onPress={() => router.back()} style={styles.backButton}>
-          <Ionicons name="arrow-back" size={24} color={Colors.text} />
-        </Pressable>
+    <View style={[styles.mainContainer, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
+      
+      {/* HEADER: Centered */}
+<View style={styles.header}>
+  <Pressable onPress={() => router.back()} style={styles.backButton}>
+    <Ionicons name="arrow-back" size={24} color={Colors.text} />
+  </Pressable>
+  <Text style={styles.headerTitle}>Evidence Lab</Text>
+  <Text style={styles.headerSubtitle}>Analyze the clues below</Text>
+</View>
 
-        <Text style={styles.headerTitle}>Types of Evidence</Text>
-        <Text style={styles.headerSubtitle}>Detectives use these clues to solve cases!</Text>
-
-        <View style={styles.list}>
-          <EvidenceItem 
-            title="Fingerprints" 
-            description="Unique patterns found on fingertips." 
-            icon={Fingerprint} 
-            color="#FF6B6B" 
-          />
-          <EvidenceItem 
-            title="DNA Clues" 
-            description="Found in hair, skin, or droplets." 
-            icon={TestTube} 
-            color="#4ECDC4" 
-          />
-          <EvidenceItem 
-            title="Photos" 
-            description="Visual records of the crime scene." 
-            icon={Camera} 
-            color="#FFD93D" 
-          />
-          <EvidenceItem 
-            title="Documents" 
-            description="Handwritten notes or digital files." 
-            icon={FileText} 
-            color="#6C9BCF" 
-          />
+      {/* Centered Grid with a max width for Desktop */}
+      <View style={styles.gridWrapper}>
+        <View style={styles.gridContainer}>
+          {[0, 2, 4].map((startIndex) => (
+            <View key={startIndex} style={styles.row}>
+              {EVIDENCE_DATA.slice(startIndex, startIndex + 2).map((item) => (
+                <Pressable 
+                  key={item.id} 
+                  style={styles.card} 
+                  onPress={() => router.push(`/${item.id}`)}
+                >
+                  <ImageBackground 
+                    source={item.image} 
+                    style={styles.cardPreview} 
+                    resizeMode="contain" 
+                    imageStyle={{ opacity: 0.9 }}
+                  />
+                  <View style={styles.cardFooter}>
+                    <Text style={styles.cardTitle}>{item.title}</Text>
+                  </View>
+                </Pressable>
+              ))}
+            </View>
+          ))}
         </View>
-      </ScrollView>
+      </View>
 
-      {/* Floating All Done Button */}
-      <Pressable 
-        style={styles.doneButton} 
-        onPress={() => router.push('/explore')}
-      >
-        <Text style={styles.doneText}>All done</Text>
-        <CheckCircle size={18} color="white" style={{ marginLeft: 6 }} />
-      </Pressable>
+      <View style={styles.footer}>
+        <Pressable 
+          style={styles.doneButton} 
+          onPress={() => router.push('/explore')}
+        >
+          <Text style={styles.doneText}>All done</Text>
+          <CheckCircle size={18} color="white" style={{ marginLeft: 6 }} />
+        </Pressable>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  scrollContent: { padding: 20, paddingTop: 60, paddingBottom: 120 },
-  backButton: { marginBottom: 20 },
-  headerTitle: { fontSize: 32, fontWeight: '900', color: Colors.text },
-  headerSubtitle: { fontSize: 16, color: '#94A3B8', marginBottom: 30 },
-  list: { gap: 15 },
-  evidenceCard: {
+  mainContainer: { 
+    flex: 1, 
+    backgroundColor: Colors.background,
+    paddingHorizontal: 20,
+  },
+  header: {
+    marginTop: 10,
+    marginBottom: 10,
+    alignItems: 'center', // Centers the text and back button horizontally
+    justifyContent: 'center',
+  },
+  backButton: { 
+    position: 'absolute', // Pulls button to the left so it doesn't push text off-center
+    left: 0,
+    top: 5,
+  },
+  headerTitle: { 
+    fontSize: 26, 
+    fontWeight: '900', 
+    color: Colors.text, 
+    letterSpacing: 1,
+    textAlign: 'center', // Ensures text centers within its own box
+  },
+  headerSubtitle: { 
+    fontSize: 13, 
+    color: '#94A3B8',
+    textAlign: 'center',
+    marginTop: 2,
+  },
+  
+  gridWrapper: {
+    flex: 1,
+    alignItems: 'center', // Centers the grid on desktop
+    justifyContent: 'center',
+  },
+  gridContainer: {
+    flex: 1,
+    width: '100%',
+    maxWidth: 500, 
+    marginVertical: 10,
+    gap: 20, // Increased vertical space between rows
+  },
+  row: {
+    flex: 1,
     flexDirection: 'row',
-    backgroundColor: '#1E293B', // Dark card to match her theme
-    padding: 15,
-    borderRadius: 20,
-    alignItems: 'center',
+    gap: 20, // Increased horizontal space between the two columns
+  },
+  card: {
+    flex: 1,
+    backgroundColor: '#1E293B',
+    borderRadius: 12,
+    overflow: 'hidden',
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.1)',
+    borderColor: 'rgba(56, 189, 248, 0.15)',
+    // We can remove aspectRatio if you want the cards to 
+    // stretch slightly to fill the space, or keep it for consistency.
+    aspectRatio: 0.85, 
   },
-  iconBox: {
-    padding: 12,
-    borderRadius: 15,
-    marginRight: 15,
+  cardPreview: {
+    flex: 1, 
+    width: '100%',
+    height: '100%',
+    // This is the safety net - ensures the whole image fits without stretching
+    backgroundColor: '#070C14', 
   },
-  textContainer: { flex: 1 },
-  evidenceTitle: { fontSize: 18, fontWeight: 'bold', color: 'white' },
-  evidenceDescription: { fontSize: 14, color: '#94A3B8', marginTop: 2 },
+  cardFooter: {
+    paddingVertical: 10,
+    alignItems: 'center',
+    backgroundColor: '#1E293B',
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(255,255,255,0.05)',
+  },
+  cardTitle: {
+    color: 'white',
+    fontSize: 13,
+    fontWeight: '800',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  footer: {
+    paddingVertical: 15,
+    alignItems: 'flex-end',
+  },
   doneButton: {
-    position: 'absolute',
-    bottom: 30,
-    right: 20,
     backgroundColor: '#4CAF50',
     flexDirection: 'row',
     alignItems: 'center',
     paddingVertical: 12,
     paddingHorizontal: 20,
-    borderRadius: 50,
-    elevation: 10,
-    shadowColor: '#000',
-    shadowOpacity: 0.3,
-    shadowRadius: 5,
+    borderRadius: 25,
   },
-  doneText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  doneText: { color: 'white', fontWeight: 'bold' },
 });
