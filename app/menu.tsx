@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Pressable, Dimensions } from 'react-native';
-import { Search, ShieldCheck } from 'lucide-react-native';
+import { Search, ShieldCheck, Bot, Sparkles } from 'lucide-react-native'; // Added Bot and Sparkles
 import { Colors } from '../src/constants/Colors'; 
 import { useRouter } from 'expo-router'; 
+import { useUser } from '../UserContext'; // Added to track name
 import Animated, { 
   useSharedValue, 
   useAnimatedStyle, 
@@ -15,9 +16,10 @@ interface MenuButtonProps {
   icon: any; 
   color: string;
   onPress: () => void;
+  isSmall?: boolean; // Added for different button sizes
 }
 
-const MenuButton: React.FC<MenuButtonProps> = ({ title, subtitle, icon: Icon, color, onPress }) => {
+const MenuButton: React.FC<MenuButtonProps> = ({ title, subtitle, icon: Icon, color, onPress, isSmall }) => {
   const scale = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -29,12 +31,20 @@ const MenuButton: React.FC<MenuButtonProps> = ({ title, subtitle, icon: Icon, co
       onPressOut={() => (scale.value = withSpring(1))}
       onPress={onPress}
     >
-      <Animated.View style={[styles.card, { backgroundColor: color }, animatedStyle]}>
-        <View style={styles.iconContainer}>
-          <Icon size={48} color="white" strokeWidth={2.5} />
+      <Animated.View style={[
+        styles.card, 
+        { backgroundColor: color }, 
+        isSmall && { padding: 15, borderRadius: 20 },
+        animatedStyle
+      ]}>
+        <View style={[styles.iconContainer, isSmall && { marginBottom: 0, marginRight: 15 }]}>
+          <Icon size={isSmall ? 24 : 48} color="white" strokeWidth={2.5} />
         </View>
-        <Text style={styles.cardTitle}>{title}</Text>
-        <Text style={styles.cardSubtitle}>{subtitle}</Text>
+        <View style={isSmall && { flex: 1 }}>
+          <Text style={[styles.cardTitle, isSmall && { fontSize: 18 }]}>{title}</Text>
+          <Text style={[styles.cardSubtitle, isSmall && { fontSize: 12, marginTop: 2 }]}>{subtitle}</Text>
+        </View>
+        {isSmall && <Sparkles size={20} color="white" opacity={0.7} />}
       </Animated.View>
     </Pressable>
   );
@@ -42,16 +52,29 @@ const MenuButton: React.FC<MenuButtonProps> = ({ title, subtitle, icon: Icon, co
 
 export default function MenuScreen() {
   const router = useRouter(); 
+  const { userName } = useUser(); // Pulling the name from your Context
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.emoji}>🕵️‍♀️</Text>
-        <Text style={styles.heading}>Welcome to Frenzy!</Text>
-        <Text style={styles.subHeading}>Ready to solve some mysteries, Junior Detective?</Text>
+        <Text style={styles.heading}>Hi, {userName || 'Detective'}!</Text>
+        <Text style={styles.subHeading}>Ready to solve some mysteries?</Text>
       </View>
 
       <View style={styles.buttonContainer}>
+        {/* NEW JUNIOR LAB AI BUTTON (Search Style) */}
+        <MenuButton 
+          title="Junior Lab AI" 
+          subtitle="Ask me any Forensic doubts!"
+          icon={Bot}
+          color="#8B5CF6" // Purple for AI
+          isSmall={true}
+          onPress={() => router.push('/junior_lab_ai')}
+        />
+
+        <View style={{ height: 20 }} />
+
         <MenuButton 
           title="Explore" 
           subtitle="Learn the secrets of Forensics!"
@@ -59,7 +82,9 @@ export default function MenuScreen() {
           color={Colors.primary} 
           onPress={() => router.push('/explore')}
         />
+        
         <View style={{ height: 20 }} />
+        
         <MenuButton 
           title="Test Mode" 
           subtitle="Are you a Master Sleuth?"
@@ -85,7 +110,7 @@ const styles = StyleSheet.create({
   },
   header: {
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 30,
   },
   emoji: {
     fontSize: 50,
@@ -111,7 +136,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 25,
     borderRadius: 30,
-    flexDirection: 'column',
+    flexDirection: 'row', // Changed to row for search-style buttons
     alignItems: 'center',
     elevation: 8,
     shadowColor: '#000',
@@ -123,17 +148,17 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(255,255,255,0.2)',
     padding: 15,
     borderRadius: 20,
-    marginBottom: 15,
+    marginBottom: 0, // Removed bottom margin for row layout
   },
   cardTitle: {
     fontSize: 26,
     fontWeight: 'bold',
-    color: '#0F172A', 
+    color: '#FFFFFF', // Changed to white for better contrast on purple/blue
   },
   cardSubtitle: {
     fontSize: 14,
-    color: '#0F172A',
-    opacity: 0.8,
+    color: '#FFFFFF',
+    opacity: 0.9,
     marginTop: 5,
   },
   footerDecor: {
