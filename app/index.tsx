@@ -3,12 +3,16 @@ import { StyleSheet, Text, View, TouchableOpacity, StatusBar } from 'react-nativ
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '../src/constants/Colors';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+// 1. Import the router
+import { useRouter } from 'expo-router';
+
 export default function WelcomeScreen() {
   const insets = useSafeAreaInsets();
+  // 2. Initialize the router
+  const router = useRouter();
 
-  // We explicitly define the styles here to avoid boolean evaluation issues
   const dynamicPadding = {
-    paddingTop: insets.top > 0 ? insets.top : 20, // Fallback to 20 if inset is 0
+    paddingTop: insets.top > 0 ? insets.top : 20,
     paddingBottom: insets.bottom > 0 ? insets.bottom : 20,
   };
 
@@ -27,23 +31,18 @@ export default function WelcomeScreen() {
       <View style={styles.footer}>
         <TouchableOpacity 
           style={styles.primaryButton}
-          onPress={() => console.log("Initializing...")}
+          // 3. Update the onPress to navigate to your menu
+          onPress={() => router.push('/menu')} 
           activeOpacity={0.8}
         >
           <Text style={styles.buttonText}>INITIALIZE SCAN</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity 
-          style={styles.secondaryButton}
-          activeOpacity={0.7}
-        >
-          <Text style={[styles.buttonText, { color: Colors.primary }]}>ACCESS DATABASE</Text>
         </TouchableOpacity>
       </View>
     </View>
   );
 }
 
+// ... styles remain the same as your teammate's code ...
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -65,7 +64,6 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: Colors.primary,
     marginBottom: 24,
-    // Glow effect
     shadowColor: Colors.primary,
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 0.5,
@@ -94,15 +92,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     alignItems: 'center',
   },
-  secondaryButton: {
-    paddingVertical: 18,
-    borderRadius: 8,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: Colors.primary,
-  },
   buttonText: {
-    color: '#0F172A', // Hardcoded dark for visibility
+    color: '#0F172A', 
     fontWeight: 'bold',
     fontSize: 14,
     letterSpacing: 2,
